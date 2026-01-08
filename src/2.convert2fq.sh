@@ -6,7 +6,7 @@
 #SBATCH --time=1-00:00:00
 #SBATCH --partition=DCU
 #SBATCH --job-name=convert2fq
-#SBATCH --output=logs/convert2fq_%A_%a.slurmout
+#SBATCH --output=logs/convert2fq_%A_%a.log
 
 set -euo pipefail
 
@@ -25,9 +25,15 @@ conda activate tool_sra-tools
 echo "[INFO] Conda environment 'tool_sra-tools' activated."
 
 # -----------------------------
+# Project paths
+# -----------------------------
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
+
+# -----------------------------
 # Directory configuration
 # -----------------------------
-output_dir="../data"
+output_dir="${PROJECT_ROOT}/data"
 sra_dir="${output_dir}/sra"
 fastq_dir="${output_dir}/fastq"
 
@@ -36,7 +42,7 @@ mkdir -p "${fastq_dir}"
 # -----------------------------
 # Get SRR ID for this array task
 # -----------------------------
-csv_file="SraRunTable.csv"
+csv_file="${PROJECT_ROOT}/meta/SraRunTable.csv"
 
 # Skip header (line 1)
 csv_line=$((SLURM_ARRAY_TASK_ID + 1))
@@ -56,10 +62,14 @@ echo "[INFO] Processing SRR accession: ${srr_id}"
 # -----------------------------
 echo "[INFO] Converting ${srr_id}.sra to FASTQ..."
 
+sample_fastq_dir="${fastq_dir}/${srr_id}"
+mkdir -p "${sample_fastq_dir}"
+
 fasterq-dump \
     --split-files \
+    --include-technical \
     --threads 16 \
-    --outdir "${fastq_dir}" \
+    --outdir "${sample_fastq_dir}" \
     "${sra_dir}/${srr_id}/${srr_id}.sra"
 
 echo "[INFO] FASTQ generation completed for ${srr_id}"
@@ -69,8 +79,9 @@ echo "[INFO] FASTQ generation completed for ${srr_id}"
 # -----------------------------
 echo "[INFO] Compressing FASTQ files with pigz..."
 
-pigz -p 16 "${fastq_dir}/${srr_id}_1.fastq"
-pigz -p 16 "${fastq_dir}/${srr_id}_2.fastq"
+pigz -p 16 "${sample_fastq_dir}/${srr_id}_1.fastq"
+pigz -p 16 "${sample_fastq_dir}/${srr_id}_2.fastq"
+pigz -p 16 "${sample_fastq_dir}/${srr_id}_3.fastq"
 
 echo "[INFO] Compression completed for ${srr_id}"
 

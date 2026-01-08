@@ -1,3 +1,47 @@
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# R/RStudio
+.Rhistory
+.RData
+.Rproj.user/
+
+# Temporary files
+.tmp/
+*.tmp
+*.log
+*.out
+*.err
+
+# Raw data and large intermediates
 data/
+qc/
 output/
 **/logs/
+
+# Heavy analysis artifacts and caches
+analysis/.gypsum_cache/
+analysis/seurat/
+analysis/umap_clustering/
+analysis/singler/
+analysis/manual_annotation/
+analysis/heatmap_evidence/
+
+# Large file types (commonly exceed 100MB)
+*.sra
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bai
+*.h5
+*.h5ad
+*.loom
+*.mtx
+*.rds
+*.rda
+*.rdata
+*.pdf

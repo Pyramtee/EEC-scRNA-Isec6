@@ -1,0 +1,24 @@
+group	celltype	proportion
+Disease	B_cell	0.0325197723252809
+Disease	Classical monocytes	0.0957483581057725
+Disease	CMP	0.0100241963359834
+Control	Endothelial_cells	0.0867927501793592
+Disease	Endothelial_cells	0.0939138635851113
+Control	Epithelial_cells	0.0689474237433988
+Disease	Epithelial_cells	0.333162528004222
+Control	Fibroblasts	0.483238635769905
+Disease	Fibroblasts	0.151782348451381
+Control	iPS_cells	0.0589681101168285
+Control	MSC	0.0272599689042269
+Control	Myeloid dendritic cells	0.0274055560499238
+Disease	Myeloid dendritic cells	0.0705520409654501
+Control	Natural killer cells	0.0279815877080321
+Disease	Natural killer cells	0.0228203173460739
+Control	Non-Vd2 gd T cells	0.0100246507806081
+Control	Smooth_muscle_cells	0.105157296550369
+Disease	Smooth_muscle_cells	0.106492011111432
+Control	T_cells	0.0718929629105908
+Disease	T_cells	0.12300756435937
+Disease	Tissue_stem_cells	0.0095502691439486
+Control	Unknown	0.123951773224455
+Disease	Unknown	0.0457553092135617
